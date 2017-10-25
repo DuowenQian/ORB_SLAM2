@@ -121,7 +121,6 @@ public:
     std::vector<MapPoint*> GetTrackedMapPoints();
     std::vector<cv::KeyPoint> GetTrackedKeyPointsUn();
 
-private:
     // Save/Load functions
     void SaveMap(const string &filename);
     bool LoadMap(const string &filename);
@@ -139,7 +138,8 @@ private:
 
     // Map structure that stores the pointers to all KeyFrames and MapPoints.
     Map* mpMap;
-
+    
+    // Save map
     string mapfile;
     bool is_save_map;
 

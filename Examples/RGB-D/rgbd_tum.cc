@@ -35,9 +35,15 @@ void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageF
 
 int main(int argc, char **argv)
 {
-    if(argc != 5)
+    cout << "first argument is: " << argv[1] << endl;
+    cout << "second argument is: " << argv[2] << endl;
+    cout << "third argument is: " << argv[3] << endl;
+    cout << "fourth argument is: " << argv[4] << endl;
+    cout << "fifth argument is: " << argv[5] << endl;
+
+    if(argc != 6)
     {
-        cerr << endl << "Usage: ./rgbd_tum path_to_vocabulary path_to_settings path_to_sequence path_to_association" << endl;
+        cerr << endl << "Usage: ./rgbd_tum path_to_vocabulary path_to_settings path_to_sequence path_to_association [1|0](save map)?" << endl;
         return 1;
     }
 
@@ -62,7 +68,7 @@ int main(int argc, char **argv)
     }
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::RGBD,true);
+    ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::RGBD,true, (bool)atoi(argv[4]));
 
     // Vector for tracking time statistics
     vector<float> vTimesTrack;
@@ -135,7 +141,8 @@ int main(int argc, char **argv)
     // Save camera trajectory
     SLAM.SaveTrajectoryTUM("CameraTrajectory.txt");
     SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");   
-
+    SLAM.SaveMap("Map.bin");
+    SLAM.LoadMap("Map.bin");
     return 0;
 }
 
