@@ -72,7 +72,8 @@ int main(int argc, char **argv)
 
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::Image> sync_pol;
     message_filters::Synchronizer<sync_pol> sync(sync_pol(10), rgb_sub,depth_sub);
-    sync.registerCallback(boost::bind(&ImageGrabber::GrabRGBD,&igb,_1,_2));
+    sync.registerCallback(boost::bind(&ImageGrabber::GrabRGBD,&igb,_1,_2)); // Bind (call) GrabRGBD with arg &igb.
+    														//"_1" means 1st input arg. "_2" means second input arg.
     ros::spin();
 
     // Stop all threads
